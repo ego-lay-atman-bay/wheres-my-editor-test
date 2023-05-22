@@ -59,12 +59,12 @@ jobs:
     - name: Create zip
       run: zip -r -q wme-mac.zip ./dist
     
-    - name: Upload to release
-      run: |
-        gh release upload ${{ github.event.release.tag_name }} wme-mac.zip
+    # - name: Upload to release
+    #   run: |
+    #     gh release upload ${{ github.event.release.tag_name }} wme-mac.zip
       
-      env:
-        GH_TOKEN: ${{ github.token }}
+    #   env:
+    #     GH_TOKEN: ${{ github.token }}
 
     - name: Upload Release Asset
       uses: actions/upload-release-asset@v1
