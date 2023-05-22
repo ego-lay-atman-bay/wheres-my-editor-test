@@ -1,8 +1,12 @@
 name: Package Application - MacOS
 
-on: workflow_dispatch
-#  push:
-#    branches: [ main ]
+on: 
+  release:
+    types: [created]
+
+  # workflow_dispatch:
+  # push:
+  #   branches: [ main ]
 #  pull_request:
 #    branches: [ main ]
 
@@ -51,3 +55,22 @@ jobs:
       with:
         name: wme
         path: dist/
+    
+    - name: Upload to release
+      run: |
+        gh release upload ${{ github.event.release.tag_name }} dist/
+
+        
+  release:
+    name: Upload Release Asset
+    runs-on: ubuntu-latest
+    steps:
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }} 
+          asset_path: ./dist
+          asset_name: wme-MacOS
+          asset_content_type: application/octet-stream
