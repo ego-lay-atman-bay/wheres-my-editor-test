@@ -95,9 +95,10 @@ jobs:
         python build.py
 
     - name: Create zip
+      shell: pwsh
       run: |
         mv ./dist ./wme-Windows |
-        zip -r ./wme-Windows.zip ./wme-Windows/
+        Compress-Archive ./wme-Windows/ ./wme-Windows.zip
 
     - name: Upload Release Asset
       uses: actions/upload-release-asset@v1
