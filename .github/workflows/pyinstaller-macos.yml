@@ -98,7 +98,9 @@ jobs:
       shell: pwsh
       run: |
         mv ./dist ./wme-Windows |
-        Compress-Archive ./wme-Windows/ ./wme-Windows.zip
+        Compress-Archive ./wme-Windows/ ./wme-Windows.zip |
+        Get-Location |
+        ls
 
     - name: Upload Release Asset
       uses: actions/upload-release-asset@v1
