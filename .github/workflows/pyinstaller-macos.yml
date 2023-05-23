@@ -11,104 +11,122 @@ on:
 #    branches: [ main ]
 
 jobs:
-  # mac-build:
-  #   name: build Mac OS
+  mac-build:
+    name: build Mac OS
 
-  #   runs-on: macos-latest
+    runs-on: macos-latest
 
-  #   steps:
-  #   - uses: actions/checkout@v2
+    steps:
+    - uses: actions/checkout@v2
     
-  #   - name: Set up Python 3.11
-  #     uses: actions/setup-python@v2
-  #     with:
-  #       python-version: 3.11
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.11
       
-  #   - name: Git checkout
-  #     uses: actions/checkout@v2
-  #     with:
-  #       fetch-depth: '0'
-  #   - name: git
-  #     run: |
-  #       # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
-  #       git --version
-  #       git config user.name "GitHub Actions Bot"
-  #       git config user.email "<>"
+    - name: Git checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: '0'
+    - name: git
+      run: |
+        # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
+        git --version
+        git config user.name "GitHub Actions Bot"
+        git config user.email "<>"
     
-  #   - name: Install dependencies
-  #     run: |
-  #       python -m pip install --upgrade pip
-  #       pip install pyinstaller
-  #       pip install -r requirements.txt
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pyinstaller
+        pip install -r requirements.txt
     
-  #   - name: pyinstaller build
-  #     run: |
-  #       python build.py
+    - name: pyinstaller build
+      run: |
+        python build.py
 
-  #   - name: Create zip
-  #     run: |
-  #      mv ./dist ./wme-MacOS |
-  #      zip -r ./wme-MacOS.zip ./wme-MacOS/
+    - name: Create zip
+      run: |
+       mv ./dist ./wme-MacOS |
+       zip -r ./wme-MacOS.zip ./wme-MacOS/
 
-  #   - name: Upload Release Asset
-  #     uses: actions/upload-release-asset@v1
-  #     env:
-  #       GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-  #     with:
-  #       upload_url: ${{ github.event.release.upload_url }} 
-  #       asset_path: wme-MacOS.zip
-  #       asset_name: wheres-my-editor-MacOS.zip
-  #       asset_content_type: application/zip
+    # - name: Upload Release Asset
+    #   uses: actions/upload-release-asset@v1
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+    #   with:
+    #     upload_url: ${{ github.event.release.upload_url }} 
+    #     asset_path: wme-MacOS.zip
+    #     asset_name: wheres-my-editor-MacOS.zip
+    #     asset_content_type: application/zip
 
-  # win-build:
-  #   name: build Windows
+    - name: Upload Release Asset
+      uses: xresloader/upload-to-github-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      with:
+        file: "wme-MacOS.zip"
+        update_latest_release: true
+        release_id: ${{ github.event.release.id }}
 
-  #   runs-on: windows-latest
+  win-build:
+    name: build Windows
 
-  #   steps:
-  #   - uses: actions/checkout@v2
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
     
-  #   - name: Set up Python 3.11
-  #     uses: actions/setup-python@v2
-  #     with:
-  #       python-version: 3.11
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.11
       
-  #   - name: Git checkout
-  #     uses: actions/checkout@v2
-  #     with:
-  #       fetch-depth: '0'
-  #   - name: git
-  #     run: |
-  #       # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
-  #       git --version
-  #       git config user.name "GitHub Actions Bot"
-  #       git config user.email "<>"
+    - name: Git checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: '0'
+    - name: git
+      run: |
+        # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
+        git --version
+        git config user.name "GitHub Actions Bot"
+        git config user.email "<>"
     
-  #   - name: Install dependencies
-  #     run: |
-  #       python -m pip install --upgrade pip
-  #       pip install pyinstaller
-  #       pip install -r requirements.txt
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pyinstaller
+        pip install -r requirements.txt
     
-  #   - name: pyinstaller build
-  #     run: |
-  #       python build.py
+    - name: pyinstaller build
+      run: |
+        python build.py
 
-  #   - name: Create zip
-  #     shell: pwsh
-  #     run: ;
-  #       mv ./dist ./wme-Windows ;
-  #       Compress-Archive ./wme-Windows/ ./wme-Windows.zip ;
+    - name: Create zip
+      shell: pwsh
+      run: ;
+        mv ./dist ./wme-Windows ;
+        Compress-Archive ./wme-Windows/ ./wme-Windows.zip ;
 
-  #   - name: Upload Release Asset
-  #     uses: actions/upload-release-asset@v1
-  #     env:
-  #       GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-  #     with:
-  #       upload_url: ${{ github.event.release.upload_url }} 
-  #       asset_path: wme-Windows.zip
-  #       asset_name: wheres-my-editor-Windows.zip
-  #       asset_content_type: application/zip
+    # - name: Upload Release Asset
+    #   uses: actions/upload-release-asset@v1
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+    #   with:
+    #     upload_url: ${{ github.event.release.upload_url }} 
+    #     asset_path: wme-Windows.zip
+    #     asset_name: wheres-my-editor-Windows.zip
+    #     asset_content_type: application/zip
+
+    - name: Upload Release Asset
+      uses: xresloader/upload-to-github-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      with:
+        file: "wme-Windows.zip"
+        update_latest_release: true
+        release_id: ${{ github.event.release.id }}
 
   linux-build:
     name: build Linux
@@ -146,7 +164,7 @@ jobs:
 
     - name: Create zip
       run: |
-        mv ./dist ./wme-ubuntu |
+        mv ./dist ./wme-Ubuntu |
         zip -r ./wme-ubuntu.zip ./wme-ubuntu/
 
     # - name: Upload Release Asset
