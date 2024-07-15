@@ -55,6 +55,6 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        file: "${{ matrix.platform }}.zip"
+        file: "wme-${{ matrix.platform }}.zip"
         update_latest_release: true
         release_id: ${{ github.event.release.id }}
